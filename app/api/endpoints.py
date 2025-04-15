@@ -1,24 +1,24 @@
-# main.py
-from fastapi import FastAPI, Query, Body
+from fastapi import APIRouter, Query, Body, UploadFile, Form, File, Path
 
-from schemas import Person
-app = FastAPI()
+from app.schemas.schemas import Person, User
+
+router = APIRouter()
 
 
 # Новый эндпоинт: приветствие для автора.
-@app.get('/me', tags=['Специальный'], summary='Приветствие автора')
+@router.get('/me', tags=['Специальный'], summary='Приветствие автора')
 def hello_author():
     return {'Hello': 'author'}
 
 
-@app.get('/math-sum')
+@router.get('/math-sum')
 def math_sum(
     add: list[float] = Query(..., gt=0, lt=9.99)
 ) -> float:
     return sum([num for num in add])
 
 
-# @app.get(
+# @router.get(
 #     '/{name}',
 #     tags=['Common methods'],
 #     summary='Общее приветствие',
@@ -58,7 +58,7 @@ def math_sum(
 
 
 # Меняем метод GET на POST, указываем статичный адрес.
-@app.post('/hello')
+@router.post('/hello')
 # Вместо множества параметров теперь будет только один - person,
 # в качестве аннотации указываем класс Person.
 def greetings(person: Person = Body(
@@ -120,3 +120,35 @@ def greetings(person: Person = Body(
     if person.is_staff:
         result += ', сотрудник'
     return {'Hello': result}
+
+
+@router.post("/upload", tags=['Пример как выглядят запросы'])
+async def upload_file(
+    description: str = Form(..., description="Описание файла"),
+    file: UploadFile = File(..., description="Файл для загрузки")
+):
+    return {
+        "filename": file.filename,
+        "content_type": file.content_type,
+        "description": description
+    }
+
+
+@router.get("/search/", tags=['Пример как выглядят запросы'])
+def search(q: str = Query(...)):
+    return {"query": q}
+
+
+@router.get("/search/{name}", tags=['Пример как выглядят запросы'])
+def search(*, name: str = Path(...), q: str = Query(...)):
+    return {"query": q}
+
+
+@router.post("/login/", tags=['Пример как выглядят запросы'])
+def login(username: str = Form(...), password: str = Form(...)):
+    return {"username": username}
+
+
+@router.post("/register/", tags=['Пример как выглядят запросы'])
+def register(user: User):
+    return {"message": f"Добро пожаловать, {user.name}!"}

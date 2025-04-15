@@ -11,6 +11,12 @@ class EducationLevel(str, Enum):
     HIGHER = 'Высшее образование'
 
 
+class User(BaseModel):
+    name: str
+    age: int
+    email: str
+
+
 class Person(BaseModel):
     name: str = Field(..., max_length=20, description='Можно вводить в любом регистре', title='Полное имя')
     surname: Union[str, list[str]] = Field(..., max_length=50)

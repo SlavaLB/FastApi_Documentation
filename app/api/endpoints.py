@@ -2,13 +2,15 @@ from fastapi import APIRouter, Query, Body, UploadFile, Form, File, Path
 
 from app.schemas.schemas import Person, User
 
+from app.core.config import settings
+
 router = APIRouter()
 
 
 # Новый эндпоинт: приветствие для автора.
-@router.get('/me', tags=['Специальный'], summary='Приветствие автора')
+@router.get('/me', summary='Приветствие автора')
 def hello_author():
-    return {'Hello': 'author'}
+    return {'Hello': settings.app_author}
 
 
 @router.get('/math-sum')

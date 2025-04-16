@@ -17,3 +17,5 @@
 
 
 [dependencies](https://fastapi.tiangolo.com/tutorial/dependencies/)
+
+[Отношения между моделями](https://docs.sqlalchemy.org/en/14/orm/basic_relationships.html#basic-relationship-patterns)

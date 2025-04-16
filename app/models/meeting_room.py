@@ -3,6 +3,8 @@
 # Импортируем из Алхимии нужные классы.
 from sqlalchemy import Column, String, Text
 
+from sqlalchemy.orm import relationship
+
 # Импортируем базовый класс для моделей.
 from app.core.db import Base
 
@@ -12,3 +14,5 @@ class MeetingRoom(Base):
     # уникальным и непустым.
     name = Column(String(100), unique=True, nullable=False)
     description = Column(Text)
+    # Установите связь между моделями через функцию relationship.
+    reservations = relationship('Reservation', cascade='delete')

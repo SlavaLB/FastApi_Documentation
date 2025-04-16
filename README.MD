@@ -14,3 +14,6 @@
 [alembic.ini](https://alembic.sqlalchemy.org/en/latest/tutorial.html#editing-the-ini-file)
 
 [Шпора Alembic](https://code.s3.yandex.net/Python-dev/cheatsheets/065-fastapi-bazy-dannyh-i-migratsii-shpora/065-fastapi-bazy-dannyh-i-migratsii-shpora.html)
+
+
+[dependencies](https://fastapi.tiangolo.com/tutorial/dependencies/)

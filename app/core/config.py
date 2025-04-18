@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     author_pass: str = Field(..., env='AUTHOR_PASS')
     deadline_date: date = Field(..., env='DEADLINE_DATE')
     # path: Path = Field(..., env='PATH')
+    secret: str = Field('SECRET', env='SECRET_KEY')
 
     database_url: str
 
@@ -18,3 +19,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+print(settings.secret)

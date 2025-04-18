@@ -60,5 +60,12 @@ class CRUDReservation(CRUDBase[Reservation, ReservationCreate, ReservationUpdate
         reservations = reservations.scalars().all()
         return reservations
 
+    @staticmethod
+    async def get_by_user(user_id: int, session: AsyncSession) -> list[ReservationDB]:
+        select_stmt = select(Reservation).where(Reservation.user_id == user_id)
+        reservations = await session.execute(select_stmt)
+        reservations = reservations.scalars().all()
+        return reservations
+
 
 reservation_crud = CRUDReservation(Reservation)

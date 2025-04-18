@@ -1,7 +1,11 @@
 # app/schemas/meeting_room.py
 from datetime import datetime, timedelta
 
+from typing import Optional
+
 from pydantic import BaseModel, root_validator, validator, Field, Extra
+
+from app.schemas.user import UserRead
 
 FROM_TIME = (datetime.now()+timedelta(minutes=3)).isoformat(timespec='minutes')
 TO_TIME = (datetime.now()+timedelta(minutes=20)).isoformat(timespec='minutes')
@@ -41,6 +45,7 @@ class ReservationCreate(ReservationUpdate):
 class ReservationDB(ReservationBase):
     id: int
     meetingroom_id: int
+    user_id: Optional[int]
 
     class Config:
         orm_mode = True

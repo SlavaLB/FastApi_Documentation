@@ -1,5 +1,7 @@
 # core/config.py
-from pydantic import BaseSettings, Field
+from typing import Optional
+
+from pydantic import BaseSettings, Field, EmailStr
 from datetime import date
 
 
@@ -10,6 +12,8 @@ class Settings(BaseSettings):
     deadline_date: date = Field(..., env='DEADLINE_DATE')
     # path: Path = Field(..., env='PATH')
     secret: str = Field('SECRET', env='SECRET_KEY')
+    first_superuser_email: Optional[EmailStr] = None
+    first_superuser_password: Optional[str] = None
 
     database_url: str
 

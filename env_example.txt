@@ -6,3 +6,5 @@ APP_TITLE=Примеры для FastApi
 PATH=/home/user/data
 DATABASE_URL=sqlite+aiosqlite:///./fastapi.db
 SECRET=asdasdgrfhretyh234
+FIRST_SUPERUSER_EMAIL=test@mail.ru
+FIRST_SUPERUSER_PASSWORD=123

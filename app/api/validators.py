@@ -1,10 +1,8 @@
-from datetime import datetime
-
 from fastapi import HTTPException
 
-from sqlalchemy import select, and_
-
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models import User
 from app.schemas.meeting_room import MeetingRoomDB
 from app.crud.meeting_room import meeting_room_crud
 from app.crud.reservation import reservation_crud
@@ -49,8 +47,16 @@ async def check_reservation_intersections(
         )
 
 
-async def check_reservation_before_edit(reservation_id, session: AsyncSession) -> ReservationDB:
+async def check_reservation_before_edit(user:User, reservation_id, session: AsyncSession) -> ReservationDB:
+
     result = await reservation_crud.get(obj_id=reservation_id, session=session)
+
+    if result.user_id != user.id or not user.is_superuser:
+        raise HTTPException(
+            status_code=403,
+            detail='Невозможно редактировать или удалить чужую бронь!'
+        )
+
     if not result:
         raise HTTPException(
             status_code=404,

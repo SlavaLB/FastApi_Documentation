@@ -15,6 +15,8 @@ from app.crud.meeting_room import meeting_room_crud
 from app.api.validators import check_meeting_room_exists, check_name_duplicate
 from app.schemas.reservation import ReservationDB
 
+from app.core.user import current_superuser
+
 router = APIRouter()
 
 
@@ -23,6 +25,7 @@ router = APIRouter()
     response_model=MeetingRoomDB,
     # Исключение пустых полей из ответа
     response_model_exclude_none=True,
+    dependencies=[Depends(current_superuser)],
 )
 async def create_new_meeting_room(
         meeting_room: MeetingRoomCreate,
@@ -50,7 +53,8 @@ async def get_all_meeting_rooms(
 @router.patch(
     '/{meeting_room_id}',
     response_model=MeetingRoomDB,
-    response_model_exclude_none=True
+    response_model_exclude_none=True,
+    dependencies=[Depends(current_superuser)],
 )
 async def partially_update_meeting_room(
         meeting_room_id: int,
@@ -71,7 +75,11 @@ async def partially_update_meeting_room(
     return meeting_room
 
 
-@router.delete('/{meeting_room_id}', response_model=MeetingRoomDB)
+@router.delete(
+    '/{meeting_room_id}',
+    response_model=MeetingRoomDB,
+    dependencies=[Depends(current_superuser)],
+)
 async def delete_meeting_room(
         meeting_room_id: int,
         session: AsyncSession = Depends(get_async_session)
@@ -87,6 +95,7 @@ async def delete_meeting_room(
 @router.get(
     '/{meeting_room_id}/reservations',
     response_model=list[ReservationDB],
+    response_model_exclude={'user_id'}
 )
 async def get_reservations_for_room(
         meeting_room_id: int,

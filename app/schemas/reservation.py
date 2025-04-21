@@ -49,3 +49,12 @@ class ReservationDB(ReservationBase):
 
     class Config:
         orm_mode = True
+
+
+class ReservationDBALL(ReservationBase):
+    id: int
+    # meetingroom_id: int
+    user: Optional[UserRead]
+
+    class Config:
+        orm_mode = True

@@ -21,3 +21,5 @@
 [Отношения между моделями](https://docs.sqlalchemy.org/en/14/orm/basic_relationships.html#basic-relationship-patterns)
 
 [Шпора по Users](https://code.s3.yandex.net/Python-dev/cheatsheets/067-fastapi-users-shpora/067-fastapi-users-shpora.html)
+
+[Шпора по ssh](https://code.s3.yandex.net/backend-developer/learning-materials/Настройка%20SSH%20для%20GitHub.pdf)

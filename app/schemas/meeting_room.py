@@ -4,6 +4,8 @@ from typing import Optional
 
 from pydantic import BaseModel, Field, validator
 
+from app.schemas.reservation import ReservationDB, ReservationDBALL
+
 
 class MeetingRoomBase(BaseModel):
     name: Optional[str] = Field(None, min_length=1, max_length=100)
@@ -26,6 +28,14 @@ class MeetingRoomUpdate(MeetingRoomBase):
 
 class MeetingRoomDB(MeetingRoomCreate):
     id: int
+
+    class Config:
+        orm_mode = True
+
+
+class MeetingRoomDBAll(MeetingRoomCreate):
+    id: int
+    reservations: list[ReservationDBALL]
 
     class Config:
         orm_mode = True

@@ -8,7 +8,7 @@ from app.core.db import get_async_session
 from app.crud.reservation import reservation_crud
 
 from app.schemas.meeting_room import (
-    MeetingRoomCreate, MeetingRoomDB, MeetingRoomUpdate
+    MeetingRoomCreate, MeetingRoomDB, MeetingRoomUpdate, MeetingRoomDBAll
 )
 
 from app.crud.meeting_room import meeting_room_crud
@@ -48,6 +48,17 @@ async def get_all_meeting_rooms(
         session: AsyncSession = Depends(get_async_session)
 ) -> list[MeetingRoomDB]:
     return await meeting_room_crud.get_multi(session)
+
+
+@router.get(
+    '/all_info',
+    response_model_exclude_none=True,
+    response_model=list[MeetingRoomDBAll]
+)
+async def get_all_meeting_rooms(
+        session: AsyncSession = Depends(get_async_session)
+) -> list[MeetingRoomDBAll]:
+    return await meeting_room_crud.get_all(session)
 
 
 @router.patch(
